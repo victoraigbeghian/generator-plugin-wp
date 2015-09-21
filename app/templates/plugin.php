@@ -66,58 +66,60 @@ require 'vendor/autoload_52.php';
 /**
  * Main initiation class
  *
- * @since  <%= version %>
- * @var  string $version  Plugin version
- * @var  string $basename Plugin basename
- * @var  string $url      Plugin URL
- * @var  string $path     Plugin Path
+ * @since <%= version %>
+ * @var string $version  Plugin version
+ * @var string $basename Plugin basename
+ * @var string $url      Plugin URL
+ * @var string $path     Plugin Path
  */
 class <%= classname %> {
 
 	/**
-	 * Current version
+	 * Current version.
 	 *
-	 * @var  string
-	 * @since  <%= version %>
+	 * @since <%= version %>
+	 * @var string
 	 */
 	const VERSION = '<%= version %>';
 
 	/**
-	 * URL of plugin directory
+	 * URL of plugin directory.
 	 *
+	 * @since <%= version %>
 	 * @var string
-	 * @since  <%= version %>
 	 */
 	protected $url = '';
 
 	/**
-	 * Path of plugin directory
+	 * Path of plugin directory.
 	 *
+	 * @since <%= version %>
 	 * @var string
-	 * @since  <%= version %>
 	 */
 	protected $path = '';
 
 	/**
-	 * Plugin basename
+	 * Plugin basename.
 	 *
+	 * @since <%= version %>
 	 * @var string
-	 * @since  <%= version %>
 	 */
 	protected $basename = '';
 
 	/**
-	 * Singleton instance of plugin
+	 * Singleton instance of plugin.
 	 *
+	 * @since <%= version %>
 	 * @var <%= classname %>
-	 * @since  <%= version %>
 	 */
 	protected static $single_instance = null;
 
 	/**
-	 * Creates or returns an instance of this class.
+	 * Returns an instance of this class.
 	 *
-	 * @since  <%= version %>
+	 * A new instance of the class will be created if necessary.
+	 *
+	 * @since <%= version %>
 	 * @return <%= classname %> A single instance of this class.
 	 */
 	public static function get_instance() {
@@ -129,9 +131,9 @@ class <%= classname %> {
 	}
 
 	/**
-	 * Sets up our plugin
+	 * Sets up our plugin.
 	 *
-	 * @since  <%= version %>
+	 * @since <%= version %>
 	 */
 	protected function __construct() {
 		$this->basename = plugin_basename( __FILE__ );
@@ -145,18 +147,18 @@ class <%= classname %> {
 	 * Attach other plugin classes to the base plugin class.
 	 *
 	 * @since <%= version %>
-	 * @return  null
+	 * @return null
 	 */
 	public function plugin_classes() {
 		// Attach other plugin classes to the base plugin class.
 		// $this->admin = new <%= classprefix %>Admin( $this );
+		// Make sure the
 	}
 
 	/**
-	 * Add hooks and filters
+	 * Add hooks and filters.
 	 *
 	 * @since <%= version %>
-	 * @return null
 	 */
 	public function hooks() {
 		register_activation_hook( __FILE__, array( $this, '_activate' ) );
@@ -166,10 +168,9 @@ class <%= classname %> {
 	}
 
 	/**
-	 * Activate the plugin
+	 * Tasks to run when the plugin is activated.
 	 *
-	 * @since  <%= version %>
-	 * @return null
+	 * @since <%= version %>
 	 */
 	function _activate() {
 		// Make sure any rewrite functionality has been loaded
@@ -177,19 +178,18 @@ class <%= classname %> {
 	}
 
 	/**
-	 * Deactivate the plugin
-	 * Uninstall routines should be in uninstall.php
+	 * Deactivate the plugin.
 	 *
-	 * @since  <%= version %>
-	 * @return null
+	 * Uninstall routines should be in uninstall.php.
+	 *
+	 * @since <%= version %>
 	 */
 	function _deactivate() {}
 
 	/**
-	 * Init hooks
+	 * Init hooks.
 	 *
-	 * @since  <%= version %>
-	 * @return null
+	 * @since <%= version %>
 	 */
 	public function init() {
 		if ( $this->check_requirements() ) {
@@ -200,8 +200,8 @@ class <%= classname %> {
 	/**
 	 * Check that all plugin requirements are met
 	 *
-	 * @since  <%= version %>
-	 * @return boolean
+	 * @since <%= version %>
+	 * @return bool
 	 */
 	public static function meets_requirements() {
 		// Do checks for required classes / functions
@@ -215,8 +215,8 @@ class <%= classname %> {
 	 * Check if the plugin meets requirements and
 	 * disable it if they are not present.
 	 *
-	 * @since  <%= version %>
-	 * @return boolean result of meets_requirements
+	 * @since <%= version %>
+	 * @return bool result of meets_requirements
 	 */
 	public function check_requirements() {
 		if ( ! $this->meets_requirements() ) {
@@ -234,10 +234,9 @@ class <%= classname %> {
 	}
 
 	/**
-	 * Adds a notice to the dashboard if the plugin requirements are not met
+	 * Adds a notice to the dashboard if the plugin requirements are not met.
 	 *
-	 * @since  <%= version %>
-	 * @return null
+	 * @since <%= version %>
 	 */
 	public function requirements_not_met_notice() {
 		// Output our error
@@ -249,10 +248,12 @@ class <%= classname %> {
 	/**
 	 * Magic getter for our object.
 	 *
-	 * @since  <%= version %>
-	 * @param string $field
-	 * @throws Exception Throws an exception if the field is invalid.
-	 * @return mixed
+	 * @since <%= version %>
+	 *
+	 * @param string $field The field name to retrieve.
+	 *
+	 * @throws Exception When the field is invalid.
+	 * @return mixed The value of the field.
 	 */
 	public function __get( $field ) {
 		switch ( $field ) {
@@ -270,9 +271,11 @@ class <%= classname %> {
 	/**
 	 * Include a file from the includes directory
 	 *
-	 * @since  <%= version %>
-	 * @param  string  $filename Name of the file to be included
-	 * @return bool    Result of include call.
+	 * @since <%= version %>
+	 *
+	 * @param string $filename Name of the file to be included.
+	 *
+	 * @return bool Result of include call.
 	 */
 	public static function include_file( $filename ) {
 		$file = self::dir( 'includes/'. $filename .'.php' );
@@ -285,9 +288,11 @@ class <%= classname %> {
 	/**
 	 * This plugin's directory
 	 *
-	 * @since  <%= version %>
-	 * @param  string $path (optional) appended path
-	 * @return string       Directory and path
+	 * @since <%= version %>
+	 *
+	 * @param string $path (optional) appended path
+	 *
+	 * @return string Directory and path
 	 */
 	public static function dir( $path = '' ) {
 		static $dir;
