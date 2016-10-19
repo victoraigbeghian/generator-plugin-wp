@@ -157,8 +157,11 @@ final class <%= classname %> {
 	 * @return void
 	 */
 	public function hooks() {
-
-		add_action( 'init', array( $this, 'init' ) );
+		// Priority needs to be:
+		// < 10 for CPT_Core,
+		// < 5 for Taxonomy_Core,
+		// 0 Widgets because widgets_init runs at init priority 1.
+		add_action( 'init', array( $this, 'init' ), 0 );
 	}
 
 	/**
@@ -223,7 +226,7 @@ final class <%= classname %> {
 	 * @return void
 	 */
 	public function deactivate_me() {
-	  
+
 		// We do a check for deactivate_plugins before calling it, to protect
 		// any developers from accidentally calling it too early and breaking things.
 		if ( function_exists( 'deactivate_plugins' ) ) {
