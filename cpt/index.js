@@ -31,7 +31,7 @@ module.exports = base.extend({
     },
 
     settingValues: function() {
-      this.version    = this.pkg.version;
+      this.version = this.rc.version;
       if ( this.name ) {
         this.name     = this._.titleize( this.name.split('-').join(' ') );
         this.nameslug     = this._.slugify( this.name );
@@ -100,9 +100,10 @@ module.exports = base.extend({
         }
 
         if ( props.name || props.pluginname ) {
-          this.cptname   = this.pluginname + ' ' + this._.capitalize( this.name );
-          this.classname    = this._wpClassPrefix( this.pluginname ) + this._wpClassify( this.name );
-          this.cptslug   = this.slug + '-' + this._.slugify( this.name );
+          this.cptname    = this.pluginname + ' ' + this._.capitalize( this.name );
+          this.classname  = this._wpClassPrefix( this.pluginname ) + this._wpClassify( this.name );
+          this.cptslug    = this.slug + '-' + this._.slugify( this.name );
+          this.cptslug    = this.cptslug.substr(0,20);
           this.cptprefix  = this._.underscored( this.slug + ' ' + this.name );
         }
 
@@ -114,6 +115,7 @@ module.exports = base.extend({
   },
 
   writing: function () {
+
     this.fs.copyTpl(
       this.templatePath('cpt.php'),
       this.destinationPath('includes/class-' + this._.slugify( this.name ) + '.php'),
@@ -128,7 +130,7 @@ module.exports = base.extend({
       );
     }
 
-    this._addIncludeClass( this._.slugify( this.name ), this.classname );
+    this._addIncludeClass( this._.slugify( this.name ), this.classname, this.version );
   },
 
   install: function () {

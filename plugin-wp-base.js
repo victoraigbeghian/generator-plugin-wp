@@ -8,8 +8,8 @@ module.exports = yeoman.generators.Base.extend({
 		yeoman.generators.Base.apply(this, arguments);
 
 		updateNotifier({
-				pkg: require('./package.json')
-			}).notify({defer: false});
+			pkg: require('./package.json')
+		}).notify({defer: false});
 	},
 
 	_wpClassify: function( s ) {
@@ -25,13 +25,16 @@ module.exports = yeoman.generators.Base.extend({
 			}
 		}
 
+		result = result.replace('-', '_');
 		return result;
+
 	},
 
 	_wpClassPrefix: function( s ) {
 		var words = s.replace( /_/g, ' ' );
 		var letters = words.replace(/[a-z]/g, '');
-		var prefix = letters.replace(/\s/g, '');
+		var hyphens = letters.replace(/\s/g, '');
+		var prefix  = hyphens.replace(/-/g,'');
 		return prefix + '_';
 	},
 
@@ -57,12 +60,12 @@ module.exports = yeoman.generators.Base.extend({
 		this.fs.write( this.destinationPath( this.rc.slug + '.php' ), mainPluginFile );
 	},
 
-	_addPluginProperty: function( file, slug, className ) {
+	_addPluginProperty: function( file, slug, className, version ) {
 
 		var toAdd = '\t/**';
 		toAdd += '\n\t * Instance of ' + className;
 		toAdd += '\n\t *';
-		toAdd += '\n\t * @since NEXT';
+		toAdd += '\n\t * @since' + version;
 		toAdd += '\n\t * @var ' + className;
 		toAdd += '\n\t */';
 		toAdd += '\n\tprotected $' + slug + ';';
@@ -87,18 +90,20 @@ module.exports = yeoman.generators.Base.extend({
 		return file.replace( endComment, newInclude );
 	},
 
-	_addIncludeClass: function( slug, className ) {
+	_addIncludeClass: function( slug, className, version ) {
+
 		if ( ! this.rc.slug ) {
 			return;
 		}
 
-		slug = this._.underscored( slug );
+		slug    = this._.underscored( slug );
 		var mainPluginFile = this.fs.read( this.destinationPath( this.rc.slug + '.php' ) );
 
-		mainPluginFile = this._addPluginProperty( mainPluginFile, slug, className );
+		mainPluginFile = this._addPluginProperty( mainPluginFile, slug, className, version );
 		mainPluginFile = this._addPluginClass( mainPluginFile, slug, className );
 		mainPluginFile = this._addPropertyMagicGetter( mainPluginFile, slug );
 
 		this.fs.write( this.destinationPath( this.rc.slug + '.php' ), mainPluginFile );
 	}
+
 });
