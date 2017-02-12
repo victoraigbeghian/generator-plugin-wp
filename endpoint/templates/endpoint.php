@@ -6,6 +6,11 @@
  * @package <%= pluginname %>
  */
 
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( class_exists( 'WP_REST_Controller' ) ) {
 	class <%= classname %> extends WP_REST_Controller {
 		/**

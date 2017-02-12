@@ -6,6 +6,11 @@
  * @package <%= pluginname %>
  */
 
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 <% if ( ! composer ) {
 	%>require_once dirname( __FILE__ ) . '/../vendor/cpt-core/CPT_Core.php';<%
 	if ( ! options.nocmb2 ) { %>

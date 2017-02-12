@@ -17,6 +17,11 @@
  * @version <%= version %>
  */
 
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Copyright (c) <%= year %> <%= author %> (email : <%= authoremail %>)
  *

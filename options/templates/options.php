@@ -6,6 +6,11 @@
  * @package <%= pluginname %>
  */
 
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 <% if ( ! composer && ! options.nocmb2 ) {
 	%>require_once dirname( __FILE__ ) . '/../vendor/cmb2/init.php';<%
 } %>
